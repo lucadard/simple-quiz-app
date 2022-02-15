@@ -1,0 +1,121 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+  margin: 0;
+  background: lightsteelblue;
+}
+
+main.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.quiz-container {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 40%;
+  min-height: 30rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+}
+
+.quiz-container.loading > .question,
+.quiz-container.loading > .answers {
+    visibility: hidden;
+}
+.quiz-container.loading > .submitAns {
+    cursor: default;
+    background: gray;
+}
+
+.quiz-container.loading::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.quiz-container .preloader {
+  display: none;
+}
+
+.quiz-container.loading .preloader {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.preloader svg {
+    width: 100px;
+}
+
+.question {
+  margin: 4rem 4rem 0;
+}
+
+.question h2 {
+  margin: 0;
+  font-weight: 500;
+  text-align: center;
+  line-height: 2rem;
+  font-size: 1.5rem;
+}
+
+.question p {
+  text-align: center;
+}
+
+.answers {
+  width: 80%;
+  margin: 2rem 0;
+}
+
+.answers ul {
+  list-style: none;
+}
+
+.answers ul li {
+  margin: 1rem 0;
+  font-weight: bold;
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+}
+
+.answers label {
+  display: block;
+  line-height: 1.5rem;
+}
+.answers input[type="radio"] {
+  height: 1.5em;
+  width: 1.5em;
+  vertical-align: top;
+}
+
+button.submitAns {
+  width: 100%;
+  height: 5rem;
+  border: none;
+  background: rgb(100, 148, 237);
+  color: white;
+  cursor: pointer;
+  transition: all 150ms ease-in-out;
+  font-size: 1.5rem;
+}
+
+button.submitAns:hover {
+  background: rgba(100, 148, 237, 0.9);
+}
