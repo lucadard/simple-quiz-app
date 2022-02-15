@@ -35,22 +35,18 @@ categories = [
     'Entertainment: Cartoon & Animations'
 ]
 
-*--------------------------------------------*
 UI:
 UI inspiration:
     https://www.uidesigndaily.com/posts/sketch-questionnaire-choice-submit-day-924
     &
     https://www.uidesigndaily.com/posts/photoshop-questionnaire-choice-submit-day-397
 
-*--------------------------------------------*
 Game modes:
 
 normal mode: 10 questions of random categories raising difficulty.
-*/later/*
 choose mode: 10 questions and the user got to choose between 3 random categories raising difficulty.
 infinite: user selects difficulty and the system gives random questions everytime.
 hardcore mode: only hard questions of random categories and the user can fail only one time.
 
-*--------------------------------------------*
 Advanced features:
 

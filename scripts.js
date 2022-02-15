@@ -1,6 +1,6 @@
 var userScore = 0;
-var correctAnswer;
 var userResponse = 0;
+var correctAnswer;
 
 //insert into html
 const quizContainer = document.querySelector(".quiz-container");
@@ -13,7 +13,7 @@ const insertQuestion = (questionData) => {
   let questionCategory = questionData.category;
   let answers = questionData.incorrect_answers;
   answers.push(questionData.correct_answer);
-  //suffles correct answer
+  //shuffles correct answer
   correctAnswer = Math.floor(Math.random() * 4);
   let temp = answers[correctAnswer];
   answers[correctAnswer] = answers[3];
@@ -24,7 +24,7 @@ const insertQuestion = (questionData) => {
   answersEl.forEach((answer, index) => {
     //check first answer by default
     if (index === 0) answer.previousElementSibling.checked = "true";
-    answer.style.color = "black";
+    answer.parentElement.classList.remove("wrong", "correct");
     answer.innerHTML = answers[index];
   });
 };
@@ -54,20 +54,24 @@ updateHTML();
 
 //check user response
 const ansList = document.querySelector(".answerList");
+const selectors = ansList.querySelectorAll("input");
 ansList.addEventListener("click", (e) => {
-  if (e.target.id) userResponse = parseInt(e.target.id);
+  let targetId = parseInt(e.target.id);
+  userResponse = parseInt(targetId);
+  selectors[targetId].checked = 'true';
 });
 
 //button behaviour
 const buttonEl = document.querySelector(".submitAns");
 buttonEl.addEventListener("click", () => {
   if (userResponse === correctAnswer) {
-    answersEl[userResponse].style.color = "green";
+    answersEl[userResponse].parentElement.classList.add("correct");
     console.log("user submited correct answer");
     userScore++;
-  } else {
+} else {
     console.log("user submited wrong answer");
-    answersEl[userResponse].style.color = "red";
+    answersEl[userResponse].parentElement.classList.add("wrong");
+    userScore > 0 ? userScore-- : userScore = 0;
   }
   quizContainer.style.pointerEvents = "none";
   setTimeout(function () {

@@ -2,6 +2,11 @@
   box-sizing: border-box;
 }
 
+:root {
+    --color-correct: rgba(0, 128, 0, 0.2);
+    --color-wrong: rgba(255, 0, 0, 0.2);
+}
+
 body {
   font-family: sans-serif;
   margin: 0;
@@ -86,23 +91,44 @@ main.container {
 
 .answers ul {
   list-style: none;
+  margin-left: -2rem;
 }
+
 
 .answers ul li {
-  margin: 1rem 0;
-  font-weight: bold;
-  display: grid;
-  grid-template-columns: 2.5rem 1fr;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    padding: .7rem .5rem;
+    border-radius: .5rem;
 }
 
-.answers label {
-  display: block;
-  line-height: 1.5rem;
+.answers ul li > * {
+  pointer-events: none;
 }
-.answers input[type="radio"] {
+
+.answers ul li:hover {
+    transition: background-color 200ms ease-in-out;
+    background: #0000001a;
+}
+
+.answers ul li.correct {
+    background: var(--color-correct);
+}
+
+.answers ul li.wrong {
+    background: var(--color-wrong);
+
+}
+
+.answers input {
   height: 1.5em;
   width: 1.5em;
-  vertical-align: top;
+  margin: 0 .5rem 0 0;
+}
+
+.answers input:hover {
+    background: black;
 }
 
 button.submitAns {
