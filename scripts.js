@@ -31,7 +31,7 @@ const insertQuestion = (questionData) => {
 
 //fetch data
 var url = "https://opentdb.com/api.php?amount=1";
-var category = 0;
+var category = 31;
 var type = "multiple";
 var difficulty = "";
 if (category >= 9 && category <= 32) url += `&category=${category}`;
