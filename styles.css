@@ -3,8 +3,8 @@
 }
 
 :root {
-    --color-correct: rgba(0, 128, 0, 0.2);
-    --color-wrong: rgba(255, 0, 0, 0.2);
+  --color-correct: rgba(0, 128, 0, 0.2);
+  --color-wrong: rgba(255, 0, 0, 0.2);
 }
 
 body {
@@ -20,7 +20,7 @@ main.container {
   align-items: center;
   height: 100vh;
 }
-
+/* quiz-container */
 .quiz-container {
   display: flex;
   position: relative;
@@ -34,14 +34,14 @@ main.container {
   background: white;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
 }
-
+/* .quiz-container loading */
 .quiz-container.loading > .question,
 .quiz-container.loading > .answers {
-    visibility: hidden;
+  visibility: hidden;
 }
 .quiz-container.loading > .submitAns {
-    cursor: default;
-    background: gray;
+  cursor: default;
+  background: gray;
 }
 
 .quiz-container.loading::after {
@@ -51,7 +51,7 @@ main.container {
   height: 100%;
   background: rgba(0, 0, 0, 0.1);
 }
-
+/* .quiz-container preloader */
 .quiz-container .preloader {
   display: none;
 }
@@ -65,7 +65,124 @@ main.container {
 }
 
 .preloader svg {
-    width: 100px;
+  width: 100px;
+}
+
+/* quiz-container unfocus */
+.quiz-container.unfocus {
+  animation: addBlur 300ms ease-in-out forwards;
+}
+
+@keyframes addBlur {
+  from {
+    filter: blur(1px);
+  }
+  to {
+    filter: blur(4px);
+  }
+}
+
+.quiz-container.unfocus::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.quiz-container.unfocus > .submitAns {
+  cursor: default;
+  background: gray;
+}
+
+/* difficulty chooser */
+.difficulty {
+  position: absolute;
+  top: 1rem;
+  width: 60%;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  transition: 500ms top 500ms ease-in-out;
+}
+
+.difficulty.active p {
+  text-align: center;
+  font-size: 2.5rem;
+  display: initial;
+  margin-top: -6rem;
+}
+
+.difficulty p {
+  display: none;
+}
+
+.difficulty .buttons {
+  display: flex;
+  justify-content: space-around;
+  gap: 2rem;
+}
+
+.difficulty button {
+  position: absolute;
+  width: 30%;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  border-radius: 0.2rem;
+  background: rgba(79, 33, 33);
+  opacity: 0.5;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+  transition: 500ms margin-left 500ms ease-in-out, opacity 300ms ease-in-out;
+  pointer-events: none;
+  cursor: pointer;
+}
+
+.difficulty.active button:nth-child(1) {
+  margin-left: -65%;
+}
+
+.difficulty button:nth-child(1) {
+  margin-left: 0;
+  z-index: -5;
+  opacity: 0;
+}
+
+.difficulty.active button:nth-child(3) {
+  margin-left: 65%;
+}
+
+.difficulty button:nth-child(3) {
+  margin-left: 0;
+  z-index: -10;
+  opacity: 0;
+}
+
+.difficulty button span {
+  color: rgb(255, 255, 255);
+  font-size: 2rem;
+}
+
+.difficulty.active {
+  top: 40%;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.difficulty.active button {
+  opacity: 1;
+  pointer-events: initial;
+  cursor: pointer;
+}
+
+.difficulty button.hide {
+  opacity: 0;
+}
+
+.difficulty button.show {
+  opacity: .6;
+  transition: 300ms margin-left 300ms ease-in-out, 300ms opacity 300ms ease-in-out;
 }
 
 .question {
@@ -94,13 +211,12 @@ main.container {
   margin-left: -2rem;
 }
 
-
 .answers ul li {
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    padding: .7rem .5rem;
-    border-radius: .5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  padding: 0.7rem 0.5rem;
+  border-radius: 0.5rem;
 }
 
 .answers ul li > * {
@@ -108,27 +224,26 @@ main.container {
 }
 
 .answers ul li:hover {
-    transition: background-color 200ms ease-in-out;
-    background: #0000001a;
+  transition: background-color 200ms ease-in-out;
+  background: #0000001a;
 }
 
 .answers ul li.correct {
-    background: var(--color-correct);
+  background: var(--color-correct);
 }
 
 .answers ul li.wrong {
-    background: var(--color-wrong);
-
+  background: var(--color-wrong);
 }
 
 .answers input {
   height: 1.5em;
   width: 1.5em;
-  margin: 0 .5rem 0 0;
+  margin: 0 0.5rem 0 0;
 }
 
 .answers input:hover {
-    background: black;
+  background: black;
 }
 
 button.submitAns {
@@ -145,3 +260,29 @@ button.submitAns {
 button.submitAns:hover {
   background: rgba(100, 148, 237, 0.9);
 }
+
+@media (max-width: 1200px) {
+  .quiz-container {
+    width: 80%;
+  }
+  .difficulty .buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  .difficulty button {
+    position: relative;
+    margin-left: 0px !important;
+    width: 70%;
+  }
+  button.hide {
+    display: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .quiz-container {
+    width: 100%;
+    border-radius: unset;
+  }
+}
+

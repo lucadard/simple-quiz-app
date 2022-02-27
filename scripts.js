@@ -44,13 +44,18 @@ async function updateHTML() {
   quizContainer.style.pointerEvents = "initial";
   userResponse = 0;
   quizContainer.classList.add("loading");
-  const response = await makeRequest();
-  console.log("response received");
-  insertQuestion(response.results[0]);
-  console.log("question updated");
-  quizContainer.classList.remove("loading");
+  try {
+    console.log("making request to api")
+    const response = await makeRequest();
+    console.log("response received");
+    insertQuestion(response.results[0]);
+    console.log("question updated");
+    quizContainer.classList.remove("loading");
+  } catch (error) {
+    console.log(`${error} fetching data`);
+    updateHTML();
+  }
 }
-updateHTML();
 
 //check user response
 const ansList = document.querySelector(".answerList");
@@ -58,7 +63,7 @@ const selectors = ansList.querySelectorAll("input");
 ansList.addEventListener("click", (e) => {
   let targetId = parseInt(e.target.id);
   userResponse = parseInt(targetId);
-  selectors[targetId].checked = 'true';
+  selectors[targetId].checked = "true";
 });
 
 //button behaviour
@@ -68,10 +73,10 @@ buttonEl.addEventListener("click", () => {
     answersEl[userResponse].parentElement.classList.add("correct");
     console.log("user submited correct answer");
     userScore++;
-} else {
+  } else {
     console.log("user submited wrong answer");
     answersEl[userResponse].parentElement.classList.add("wrong");
-    userScore > 0 ? userScore-- : userScore = 0;
+    userScore > 0 ? userScore-- : (userScore = 0);
   }
   quizContainer.style.pointerEvents = "none";
   setTimeout(function () {
@@ -91,3 +96,23 @@ const nextQuestion = () => {
   updateScore();
   updateHTML();
 };
+
+//choose difficulty
+const btnsContainer = document.querySelector(".difficulty .buttons");
+const btns = btnsContainer.querySelectorAll('button');
+btns.forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+    difficulty = e.currentTarget.id;
+    btns.forEach((btn) => { 
+        if (btn.id !== difficulty) btn.classList.add('hide');
+        else btn.classList.add('show');
+    })
+    btnsContainer.parentElement.classList.remove('active');
+    quizContainer.classList.remove('unfocus');
+    updateHTML();
+  });
+});
+
+//app start
+quizContainer.classList.add('loading');
+quizContainer.classList.add('unfocus');
